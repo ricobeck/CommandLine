@@ -13,7 +13,7 @@
 
 @implementation CLRequest
 
-+ (instancetype)request {
++ (nonnull instancetype)request {
     return [self requestWithProcessProcess:[NSProcessInfo processInfo]];
 }
 
@@ -59,7 +59,7 @@
     return self;
 }
 
-+ (instancetype)requestWithCommands:(NSArray *)commands queries:(NSDictionary *)queries flags:(id)flags paths:(NSArray *)paths {
++ (instancetype)requestWithCommands:(NSArray *)commands queries:(nullable NSDictionary *)queries flags:(nullable  id)flags paths:(nullable NSArray *)paths {
     NSMutableArray *_cmds = [commands mutableCopy];
     CLCommand *command = [CLCommand main];
     while (_cmds.count > 1) {
@@ -135,12 +135,20 @@
     }
 }
 
+- (void)verbose:(NSString *)format args:(va_list)arguments {
+    [self verbose:format, arguments];
+}
+
 - (void)print:(NSString *)format, ... {
     va_list args;
     va_start(args, format);
     NSString *str = [[NSString alloc] initWithFormat:format arguments:args];
     va_end(args);
     printf("%s", str.UTF8String);
+}
+
+- (void)print:(NSString *)format args:(va_list)arguments {
+    [self print:format, arguments];
 }
 
 - (void)error:(NSString *)format, ... {
@@ -152,6 +160,11 @@
     CCPrintf(CCStyleForegroundColorDarkRed, str);
 }
 
+- (void)error:(NSString *)format args:(va_list)arguments {
+    [self error:format, arguments];
+}
+
+
 - (void)warning:(NSString *)format, ... {
     va_list args;
     va_start(args, format);
@@ -159,6 +172,10 @@
     str = [str stringByAppendingString:@"\n"];
     va_end(args);
     CCPrintf(CCStyleForegroundColorYellow, str);
+}
+
+- (void)warning:(NSString *)format args:(va_list)arguments {
+    [self warning:format, arguments];
 }
 
 - (void)success:(NSString *)format, ... {
@@ -170,6 +187,10 @@
     CCPrintf(CCStyleForegroundColorGreen, str);
 }
 
+- (void)success:(NSString *)format args:(va_list)arguments {
+    [self success:format, arguments];
+}
+
 - (void)info:(NSString *)format, ... {
     va_list args;
     va_start(args, format);
@@ -177,6 +198,10 @@
     str = [str stringByAppendingString:@"\n"];
     va_end(args);
     CCPrintf(CCStyleLight, str);
+}
+
+- (void)info:(NSString *)format args:(va_list)arguments {
+    [self info:format, arguments];
 }
 
 @end

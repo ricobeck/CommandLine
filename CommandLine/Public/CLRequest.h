@@ -10,6 +10,7 @@
 
 @class CLCommand;
 
+NS_ASSUME_NONNULL_BEGIN
 @interface CLRequest : NSObject
 
 @property (nonatomic, strong, readonly) NSArray *commands;
@@ -26,13 +27,13 @@
 
 + (instancetype)request;
 
-+ (instancetype)requestWithArgc:(int)argc argv:(const char *[])argv;
++ (instancetype)requestWithArgc:(int)argc argv:(const char *_Nonnull[_Nonnull])argv;
 
-+ (instancetype)requestWithArguments:(NSArray *)arguments;
++ (nullable instancetype)requestWithArguments:(NSArray *)arguments;
 
-+ (instancetype)requestWithCommands:(NSArray *)commands queries:(NSDictionary *)queries flags:(id)flags paths:(NSArray *)paths;
++ (nullable instancetype)requestWithCommands:(NSArray *)commands queries:(nullable NSDictionary *)queries flags:(nullable  id)flags paths:(nullable NSArray *)paths;
 
-+ (instancetype)illegallyRequestWithCommands:(NSArray *)commands error:(NSError *)error;
++ (nullable instancetype)illegallyRequestWithCommands:(NSArray *)commands error:(NSError *)error;
 
 - (NSString *)stringForQuery:(NSString *)query;
 
@@ -46,14 +47,27 @@
 
 - (void)verbose:(NSString *)format, ...;
 
+- (void)verbose:(NSString *)format args:(va_list)arguments;
+
 - (void)print:(NSString *)format, ...;
+
+- (void)print:(NSString *)format args:(va_list)arguments;
 
 - (void)error:(NSString *)format, ...;
 
+- (void)error:(NSString *)format args:(va_list)arguments;
+
 - (void)warning:(NSString *)format, ...;
+
+- (void)warning:(NSString *)format args:(va_list)arguments;
 
 - (void)success:(NSString *)format, ...;
 
+- (void)success:(NSString *)format args:(va_list)arguments;
+
 - (void)info:(NSString *)format, ...;
 
+- (void)info:(NSString *)format args:(va_list)arguments;
+
 @end
+NS_ASSUME_NONNULL_END

@@ -96,7 +96,7 @@
     return explain;
 }
 
-+ (CLRequest *)requestWithArguments:(NSArray<NSString *> *)arguments {
++ (nullable CLRequest *)requestWithArguments:(NSArray<NSString *> *)arguments {
     if (arguments.count == 0) {
         return nil;
     }
